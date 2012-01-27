@@ -21,18 +21,41 @@
 						action: 'init',
 						options:{
 							center:[data.latitude,data.longitude],
-							zoom:16,
+							zoom:14,
 							mapTypeId: google.maps.MapTypeId.ROADMAP,
 							mapTypeControl: true,
 							mapTypeControlOptions: {
 								style: google.maps.MapTypeControlStyle.DROPDOWN_MENU
 							},
+							
 							navigationControl: true,
 							scrollwheel: true,
 							streetViewControl: true
 						}						
 					}
 				);
+
+				$('#map_div').gmap3({
+					action: 'addMarker',
+					address: ""+data.latitude+","+data.longitude,
+					map:{
+					center: true,
+					zoom: 14
+					},
+					marker:{
+					options:{
+					draggable: false
+					}
+					},
+					infowindow:{
+					options:{
+					content: 'Posicion actual'
+					},
+					events:{}
+				}
+				});
+				
+
 				$("button").button();
 				$(".headerATag").button();
 			});

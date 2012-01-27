@@ -6,17 +6,42 @@ function geolocalizacion()
 	{
 		
 		navigator.geolocation.getCurrentPosition(function(position){
-			alert(5);
+			
+			var geocoder = new google.maps.Geocoder();
+
 			var lat = position.coords.latitude;
+
 			var lng = position.coords.longitude;
 			
 			data = "{'latitude':" + lat + ",'longitude':" + lng + "}";
 			
 			localStorage.setItem("data",data);
 
+			/*****************************************************************/
+			if (geocoder) {
+					
+					data = eval(" ( " + data + " ) ");
+
+					geocoder.geocode( 
+
+						{'address': data.longitude + "," + data.latitude }, 
+						function(results, status) {
+							console.log(results);
+							if (status == google.maps.GeocoderStatus.OK) {
+								strlat = "" + results[0].geometry.location.lat();
+								strlng = "" + results[0].geometry.location.lng();
+								/*
+								$("#map_div").gmap3({action: 'setCenter', args:[results[0].geometry.location]});
+								$("#map_div").gmap3({action: 'setZoom', args:[14]});
+								*/
+							} else {
+								alert("Geocode was not successful for the following reason: " + status);
+							}
+						}
+					)};
+/*************************************************************/
+
 		});
-		
-		alert(localStorage.getItem("data"));
 		
 		return eval("("+ localStorage.getItem("data") +")");;
 			
