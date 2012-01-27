@@ -49,7 +49,7 @@ function pintarRuta(mapa,origen,destino)
 
 	      	//Distancia
 	        directionsDisplay.setDirections(response);
-	        $('#distance').hmtl(response.routes[0].legs[0].distance.value + " meters");
+	        $('#distance').hmtl(response.routes[0].legs[0].distance.value + "M");
 
 	      }
 	   });
