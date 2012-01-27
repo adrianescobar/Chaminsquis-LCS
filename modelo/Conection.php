@@ -1,13 +1,33 @@
 <?php 
 	require_once('../config.php');
-	class Hospital 
+	class Conection
 	{
-		private $_id;
-		private $_name;
-		private $_address;
-		private $_province;
-		private $_telefono;
+		private static $instance;
 
-		public 
-	}	
+		private function __construct()
+		{
+			$con = mysql_connect(SERVER, USER, PASSWORD);
+			mysql_select_db(DATABASE, $con);
+			echo "conectado";
+		}
+
+		public function __destruct()
+		{
+			mysql_close();
+		}
+
+		public static function connect() 
+		{
+			if(!isset(self::$instance))
+			{
+				self::$instance = new Conection();
+			}
+			return self::$instance;
+		}
+
+		public function __clone()
+		{
+			die("Can't clone this.");
+		}
+	}
 ?>
