@@ -16,9 +16,11 @@
 		}
 
 		public function __construct($name, $address, $province, $phone)
-		{
-			$query = "insert into hospitales(nombre, direccion, provincia, telefono) values('{$name}', '{$address}', '{$province}', '{$phone}')";
-			mysql_query($query);
+		{	
+			$this->_name = $name;
+			$this->_address = $address;
+			$this->_province = $province;
+			$this->_phone = $phone;
 		}
 
 		public function id($id = null)
@@ -88,6 +90,12 @@
 				$query = "update hospitales set telefono = '{$phone}' where id = ".$this->_id;		
 				mysql_query($query);	
 			}
+		}
+
+		public function save()
+		{
+			$query = "insert into hospitales(nombre, direccion, provincia, telefono) values('{$this->_name}', '{$this->_address}', '{$this->_province}', '{$this->_phone}')";
+			mysql_query($query);
 		}
 
 
