@@ -7,7 +7,7 @@
 		<script>
 			$(document).ready(function(){
 				
-				geolocalizacion();
+				console.log(geolocalizacion());
 
 			});
 		</script>
