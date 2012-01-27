@@ -19,23 +19,28 @@ body {
 	width: 448px;
 	height: 460px;
 }
-#spTopLeft {
+#divInfHosp {
 	width: 448px;
 	height: 460px;
-	float: left;
-	border: 2px solid;
-	border-color: red;
+}
+#divMapInfo {
+}
+#spTopLeft {
+	text-align: center;
+	width: 448px;
+	height: 460px;
 }
 #spTopRight {
 	text-align: center;
 	width: 448px;
 	height: 460px;
-	float: right;
-	border: 2px solid;
-	border-color: red;
+}
+#spBottonCenter {
+	text-align: center;
+	width: 100%;
+	height: 350px;
 }
 #tabSearch {
-	border: 2px;
 	width: 100%;
 }
 #tabSearch  select{

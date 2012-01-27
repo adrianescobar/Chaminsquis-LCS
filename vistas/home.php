@@ -131,7 +131,14 @@
 				
 			</form>
 			-->
-			<span id = "spTopLeft">
+			<div id = "divMapInfo">
+				<span id = "spTopLeft">
+				</span>
+				<span id = "spTopRight">
+					<div class = "gmap3" id = "map_div" name = "map_div"></div>
+				</span>
+			</div>
+			<span id = "spBottonCenter">
 				<table id = "tabSearch"	>
 					<tr>
 						<td>
@@ -151,9 +158,6 @@
 						<td colspan = "2"><button type = "">Buscar</button></td>
 					</tr>
 				</table>
-			</span>
-			<span id = "spTopRight">
-				<div class = "gmap3" id = "map_div" name = "map_div"></div>
 			</span>
 		</div>
 		<div id = "bottom">
