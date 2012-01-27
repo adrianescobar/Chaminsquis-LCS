@@ -38,8 +38,10 @@
 				if (geocoder) {
 					geocoder.geocode( { 'address': address}, function(results, status) {
 						alert(results[0].geometry.location);
+						alert("" + results[0].geometry.location.lat(),results[0].geometry.location.lng());
 						if (status == google.maps.GeocoderStatus.OK) {
-							$("#map_div").gmap3({action: 'setCenter', args:[results[0].geometry.location]})
+							$("#map_div").gmap3({action: 'setCenter', args:[results[0].geometry.location.lat(),results[0].geometry.location.lng()]})
+							
 						} else {
 							alert("Geocode was not successful for the following reason: " + status);
 						}
