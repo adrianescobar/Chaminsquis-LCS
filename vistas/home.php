@@ -35,31 +35,96 @@
 			
 			function codeAddress() {
 				var address = document.getElementById("address").value;
+				var strlat;
+				var strlng;
 				if (geocoder) {
 					geocoder.geocode( 
 						{'address': address}, 
 						function(results, status) {
+							
 							if (status == google.maps.GeocoderStatus.OK) {
+								strlat = "" + results[0].geometry.location.lat();
+								strlng = "" + results[0].geometry.location.lng();
+								/*
 								$("#map_div").gmap3({action: 'setCenter', args:[results[0].geometry.location]});
 								$("#map_div").gmap3({action: 'setZoom', args:[14]});
+								*/
 							} else {
 								alert("Geocode was not successful for the following reason: " + status);
 							}
 						}
 					);
+					results = [strlat,strlng];					
+					return results;
 				}
 			}
+			
+			/*
+			function codeLatLng() {
+				var input = document.getElementById("latlng").value;
+				var latlngStr = input.split(",",2);
+				var lat = parseFloat(latlngStr[0]);
+				var lng = parseFloat(latlngStr[1]);
+				var latlng = new google.maps.LatLng(lat, lng);
+				if (geocoder) {
+					geocoder.geocode(
+						{
+							'latLng': latlng
+						}, 
+						function(results, status) {
+							if (status == google.maps.GeocoderStatus.OK) {
+								if (results[1]) {
+									$("#map_div").gmap3({action: 'setZoom', args:[14]});
+									$("#map_div").gmap3({
+										action: 'addMarkers',
+										markers:[
+											{lat:48.8620722, lng:2.352047, data:'Paris !'},
+											{lat:46.59433,lng:0.342236, data:'Poitiers : great city !'},
+											{lat:42.704931, lng:2.894697, data:'Perpignan ! <br> GO USAP !'}
+										],
+										marker:{
+											options:{
+												draggable: false
+											},
+											events:{
+												mouseover: function(marker, event, data){
+													var map = $(this).gmap3('get'),
+														infowindow = $(this).gmap3({action:'get', name:'infowindow'});
+													if (infowindow){
+														infowindow.open(map, marker);
+														infowindow.setContent(data);
+													} else {
+														$(this).gmap3({action:'addinfowindow', anchor:marker, options:{content: data}});
+													}
+												},
+												mouseout: function(){
+													var infowindow = $(this).gmap3({action:'get', name:'infowindow'});
+													if (infowindow){
+														infowindow.close();
+													}
+												}
+											}
+										}
+									});
+								}
+							} else {
+								alert("Geocoder failed due to: " + status);
+							}
+						}
+					);
+				}
+			}*/
 		</script>
 	</head>
 	<body onload="initialize()">
 		<div id = "content">
 			<form action="#">
-				<p>
-					<input type="text" size="60" name="address"  id = "address" value=""/>
-					<button type = "button" onclick="codeAddress()">Go!</button>
-				</p>
-				<div class = "gmap3" id = "map_div" name = "map_div">
+				<fieldset id = "fss">
+				<input type="text" size="60" name="address"  id = "address" value=""/>
+				<button type="button" onclick="codeAddress()">GO!</button>
+				</fieldset>
 			</form>
+			<div class = "gmap3" id = "map_div" name = "map_div">
 		</div>
 	</body>
 </html>
