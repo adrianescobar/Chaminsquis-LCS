@@ -54,7 +54,10 @@
 					events:{}
 				}
 				});
-				
+
+				$.ajax({
+					url:""
+				});
 
 				$("button").button();
 				$(".headerATag").button();
@@ -156,18 +159,24 @@
 		</div>
 		<div id = "middle">
 
+			<!--
 			<div id = "spTopLeft">
+
 				<fieldset id = "fsTabSearch">
 					<table id = "tabSearch2">
 						<tr>
 							<th>No. :</th>
 							<td><input id = "inpNo" type = "text"/>
+						</tr>
+						<tr>
 							<th>Calle:</th>
 							<td><input id = "inpSt" type = "text"/></td>
 						</tr>
 						<tr>
 							<th>Sector:</th>
-							<td><input id = "inpSec" type = "text"/></td>
+							<td><input id = "inpSec" type = "text"/></td>							
+						</tr>
+						<tr>
 							<th>Ciudad:</th>
 							<td><input id = "inpCit" type = "text"/></td>
 						</tr>
@@ -194,8 +203,9 @@
 						</tr>
 					</table>
 				</fieldset>
-			</div>
 			
+			</div>
+			-->
 			<div id = "spTopRight">
 
 				<div class = "gmap3" id = "map_div" name = "map_div"></div>

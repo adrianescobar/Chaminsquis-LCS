@@ -12,7 +12,7 @@
 		<script>
 			$(document).ready(function(){
 				
-				console.log(geolocalizacion());
+				window.location = "vistas/home.php";
 
 			});
 		</script>
