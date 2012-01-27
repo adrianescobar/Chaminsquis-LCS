@@ -131,7 +131,30 @@
 				
 			</form>
 			-->
-			<div class = "gmap3" id = "map_div" name = "map_div"></div>
+			<span id = "spTopLeft">
+				<table id = "tabSearch"	>
+					<tr>
+						<td>
+							<select>
+								<option>Provincia Ejemplo</option>
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<select>
+								<option>ARS Ejemplo</option>
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<td colspan = "2"><button type = "">Buscar</button></td>
+					</tr>
+				</table>
+			</span>
+			<span id = "spTopRight">
+				<div class = "gmap3" id = "map_div" name = "map_div"></div>
+			</span>
 		</div>
 		<div id = "bottom">
 			<?php include "footer.php";?>
