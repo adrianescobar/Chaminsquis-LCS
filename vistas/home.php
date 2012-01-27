@@ -1,4 +1,5 @@
-<?php?>
+<?php
+?>
 <html>
 	<head>
 		<title>LCS Home</title>
@@ -117,14 +118,23 @@
 		</script>
 	</head>
 	<body onload="initialize()">
-		<div id = "content">
+		<div id = "header">
+			<?php include "header.php";?>
+		</div>
+		<div id = "middle">
+			<!--
 			<form action="#">
 				<fieldset id = "fss">
-				<input type="text" size="60" name="address"  id = "address" value=""/>
-				<button type="button" onclick="codeAddress()">GO!</button>
+					<input type="text" size="60" name="address"  id = "address" value=""/>
+					<button type="button" onclick="codeAddress()">GO!</button>
 				</fieldset>
+				
 			</form>
-			<div class = "gmap3" id = "map_div" name = "map_div">
+			-->
+			<div class = "gmap3" id = "map_div" name = "map_div"></div>
+		</div>
+		<div id = "bottom">
+			<?php include "footer.php";?>
 		</div>
 	</body>
 </html>
