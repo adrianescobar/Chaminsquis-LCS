@@ -6,16 +6,18 @@ function geolocalizacion()
 	{
 		
 		navigator.geolocation.getCurrentPosition(function(position){
-			
+			alert(5);
 			var lat = position.coords.latitude;
 			var lng = position.coords.longitude;
-
+			
 			data = "{'latitude':" + lat + ",'longitude':" + lng + "}";
- 
+			
 			localStorage.setItem("data",data);
 
 		});
-		alert(data);
+		
+		alert(localStorage.getItem("data"));
+		
 		return eval("("+ localStorage.getItem("data") +")");;
 			
 	}else{

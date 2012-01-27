@@ -1,4 +1,6 @@
 <?php
+	include "../modelo/Conection.php";
+	$con = Conection::connect();
 ?>
 <html>
 	<head>
@@ -12,11 +14,13 @@
 		<script type = "text/javascript" src = "../js/jquery-gmap3-4.1/gmap3.min.js"></script>
 		<script type = "text/javascript">
 			$(function(){
+			
+				data = geolocalizacion();
 				$("#map_div").gmap3(
 					{
 						action: 'init',
 						options:{
-							center:[18.885498,-70.489197],
+							center:[data.latitude,data.longitude],
 							zoom:8,
 							mapTypeId: google.maps.MapTypeId.ROADMAP,
 							mapTypeControl: true,
@@ -37,6 +41,7 @@
 			
 			function initialize() {
 				geocoder = new google.maps.Geocoder();
+				
 			}
 			
 			function codeAddress() {
@@ -136,48 +141,50 @@
 				
 			</form>
 			-->
-			<div id = "divMapInfo">
-				<span id = "spTopLeft">
-				</span>
-				<span id = "spTopRight">
-					<div class = "gmap3" id = "map_div" name = "map_div"></div>
-				</span>
+			<div id = "spTopLeft">
+				<fieldset id = "fsTabSearch">
+					<table id = "tabSearch2">
+						<tr>
+							<th>No. :</th>
+							<td><input id = "inpNo" type = "text"/>
+							<th>Calle:</th>
+							<td><input id = "inpSt" type = "text"/></td>
+						</tr>
+						<tr>
+							<th>Sector:</th>
+							<td><input id = "inpSec" type = "text"/></td>
+							<th>Ciudad:</th>
+							<td><input id = "inpCit" type = "text"/></td>
+						</tr>
+					</table>
+					<table id = "tabSearch">
+						<tr>
+							<td>
+								<select>
+									<?php
+										//mysql_query();
+									?>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<select>
+									<option>ARS Ejemplo</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td colspan = "2"><button type = "submit">Buscar</button></td>
+						</tr>
+					</table>
+				</fieldset>
 			</div>
-			<span id = "spBottonCenter">
-				<table id = "tabSearch2">
-					<tr>
-						<th>No. :</th>
-						<td><input id = "inpNo" type = "text"/>
-						<th>Calle:</th>
-						<td><input id = "inpSt" type = "text"/></td>
-					</tr>
-					<tr>
-						<th>Sector:</th>
-						<td><input id = "inpSec" type = "text"/></td>
-						<th>Ciudad:</th>
-						<td><input id = "inpCit" type = "text"/></td>
-					</tr>
-				</table>
-				<table id = "tabSearch">
-					<tr>
-						<td>
-							<select>
-								<option>Provincia Ejemplo</option>
-							</select>
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<select>
-								<option>ARS Ejemplo</option>
-							</select>
-						</td>
-					</tr>
-					<tr>
-						<td colspan = "2"><button type = "">Buscar</button></td>
-					</tr>
-				</table>
-			</span>
+			<div id = "spTopRight">
+				<div class = "gmap3" id = "map_div" name = "map_div"></div>
+			</div>			
+			<div id = "spBottonCenter">
+			</div>
 		</div>
 		<div id = "bottom">
 			<?php include "footer.php";?>
