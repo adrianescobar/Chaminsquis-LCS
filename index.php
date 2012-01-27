@@ -1,4 +1,9 @@
 <!Doctype html>
+<noscript>
+
+	<h1>Cabron</h1>
+
+</noscript>
 <hmtl lang="es">
 
 	<head>
