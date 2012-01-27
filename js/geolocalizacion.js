@@ -47,6 +47,7 @@ function pintarRuta(mapa,origen,destino)
 	   directionsService.route(request, function(response, status) {
 	      if (status == google.maps.DirectionsStatus.OK) {
 
+	      	//Distancia
 	        directionsDisplay.setDirections(response);
 	        $('#distance').hmtl(response.routes[0].legs[0].distance.value + " meters");
 
