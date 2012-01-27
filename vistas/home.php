@@ -36,16 +36,17 @@
 			function codeAddress() {
 				var address = document.getElementById("address").value;
 				if (geocoder) {
-					geocoder.geocode( { 'address': address}, function(results, status) {
-						alert(results[0].geometry.location);
-						alert("" + results[0].geometry.location.lat(),results[0].geometry.location.lng());
-						if (status == google.maps.GeocoderStatus.OK) {
-							$("#map_div").gmap3({action: 'setCenter', args:[results[0].geometry.location.lat(),results[0].geometry.location.lng()]})
-							
-						} else {
-							alert("Geocode was not successful for the following reason: " + status);
+					geocoder.geocode( 
+						{'address': address}, 
+						function(results, status) {
+							if (status == google.maps.GeocoderStatus.OK) {
+								$("#map_div").gmap3({action: 'setCenter', args:[results[0].geometry.location]});
+								$("#map_div").gmap3({action: 'setZoom', args:[14]});
+							} else {
+								alert("Geocode was not successful for the following reason: " + status);
+							}
 						}
-					});
+					);
 				}
 			}
 		</script>
@@ -55,7 +56,7 @@
 			<form action="#">
 				<p>
 					<input type="text" size="60" name="address"  id = "address" value=""/>
-					<button onclick="codeAddress()">Go!</button>
+					<button type = "button" onclick="codeAddress()">Go!</button>
 				</p>
 				<div class = "gmap3" id = "map_div" name = "map_div">
 			</form>
