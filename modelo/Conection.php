@@ -8,7 +8,6 @@
 		{
 			$con = mysql_connect(SERVER, USER, PASSWORD);
 			mysql_select_db(DATABASE, $con);
-			echo "conectado";
 		}
 
 		public function __destruct()
