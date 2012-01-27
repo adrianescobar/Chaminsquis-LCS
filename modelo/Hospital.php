@@ -37,6 +37,11 @@
 					$this->_province = $re['provincia'];
 					$this->_phone = $re['telefono'];
 				}
+
+				$query = "select * from seguros where id_seguro = {$this->_id}";
+				$result = mysql_query($query);
+				$this->_insurance = mysql_fetch_array($result);	
+		
 			}
 			else
 			{
@@ -92,40 +97,122 @@
 			}
 		}
 
-		public function find($var = 'and', $where = array())
+		public function all()
 		{
-			$result = array();
+			$query = "select * from hospitales";
+			$result = mysql_query($query);
+			return mysql_fetch_array($result);
+		}
+		/*public function find($where = array(), $var = null, $since = 0, $fromTo = 0)
+		{
+			$conc = "";
 			if(!is_null($var) && is_string($var) && is_array($where) && !is_null($where))
 			{
-				$conc = "";
+				$conc = "where ";
 				$size = count($where);
-				foreach ($where as $key => $value) {
-					$conc .= "{$key} = {$value}"; 
+				foreach ($where as $key => $value) 
+				{
+					$conc .= "{$key} = '{$value}'"; 
 					if($size > 1)
 					{
 						$conc .= " {$var} ";		
 					}
 					$size--;
 				}
-				$query = "select * from hospitales where ".$conc;
-				echo $query;
-				$result = mysql_query($query);	
 			}
-			elseif (is_null($var) && is_array($where) && !is_null($where)) 
+			elseif (is_null($var) && is_numeric($var) && is_array($where) && !is_null($where)) 
 			{
+				$conc = "where ";
 				$size = count($where);
 				if($size == 1)
 				{
-					$conc .= ""; 
+					foreach ($where as $key => $value) 
+					{
+					 	$conc .= "{$key} = '{$value}'";
+					} 
 				}
-				$query = "select * from hospitales where ".$conc;
-				echo $query;
-				$result = mysql_query($query);	
-			
 			}
-			return mysql_fetch_array($result);
-		}
+			elseif(is_null($var) && is_null($where))
+			{
 
+			}
+
+			if($fromTo != 0)
+			{
+				$conc .= " limit ".$since.",".$fromTo;
+			}
+			//$query = "select * from hospitales ".$conc;
+			
+			$query = "select distinct* from hospitales limit 0, 10;";
+			$result = mysql_query($query);	
+			while($re = mysql_fetch_row($result))
+			{
+				$ret[] = $re;
+			}
+			return $ret;
+		}*/
+		public function find($nameIns, $namePro)
+		{
+			$query = "select h.nombre, h.direccion, h.provincia, h.telefono from hospitales h inner join hospital_seguro hs on h.id_hospital = hs.id_hospital inner join seguros s on hs.id_seguro = s.id_seguro where h.provincia = '{$namePro}' and s.nombre = '{$nameIns}'";
+			
+			$result = mysql_query($query);
+
+			$numeroFila = 0;
+			
+			echo "[";
+
+			while($re = mysql_fetch_array($result))
+			{
+				echo "{
+						'nombre':'{$re['nombre']}',
+						'direccion':'{$re['direccion']}',
+						'telefono':'{$re['telefono']}'
+					   }";
+				$numeroFila++;
+				if($numeroFila!=mysql_num_rows($result))
+				{
+					echo ",";
+				}
+				
+			}
+
+			echo "]";
+
+			
+		}
+		/*public function find($select = array(), $where = array(), $andOr = "", $groupBy = "";
+		{
+			$query = "";
+
+			if(!is_null($select) && is_array($select))
+			{
+				$query = "select ";
+				foreach ($select as $key => $value) {
+					$query .= $value . ", ";
+				}	
+			}
+			if(!is_null($where) && is_array($where) && !is_null($andOr) && is_string($andOr))
+			{
+				$query .= "where "
+				$size = count($where);
+				foreach ($where as $key => $value) {
+					$query .= $key . " = " . $value;
+					if(size > 1)
+						$query .= " ".$andOr;
+				}
+			}
+			if(!is_null($groupBy) && !is_array($andOr))
+			{
+				$query .= "group by ".$groupBy;
+			}
+			$result = mysql_query($query);
+			while($re = mysql_fetch_array($result))
+			{
+				$ret[] = $re;
+			}		
+			return $ret;
+		}
+		*/
 		public function delete($id = null)
 		{
 			if($id != null)
@@ -151,5 +238,9 @@
 			mysql_query($query);
 		}
 
+		public function hospitals()
+		{
+			return $this->_insurance;
+		}
 	}
 ?>

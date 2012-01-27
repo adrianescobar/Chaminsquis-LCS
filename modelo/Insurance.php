@@ -1,6 +1,7 @@
 <?php 
 	require_once("Conection.php");
-	class Hospital 
+
+	class Insurance 
 	{
 		private $_con;
 		
@@ -27,6 +28,10 @@
 					$this->_id = $re['id_seguro'];
 					$this->_name = $re['nombre'];
 				}
+
+				$query = "select * from seguros where id_seguro = {$this->_id}";
+				$result = mysql_query($query);
+				$this->_hospitals = mysql_fetch_array($result);
 			}
 			else
 			{
@@ -46,6 +51,45 @@
 			}
 		}
 
+		public function all()
+		{
+			$query = "select * from hospitales";
+			$result = mysql_query($query);
+			return mysql_fetch_array($result);
+		}
+		public function find($var = 'and', $where = array())
+		{
+			$result = array();
+			$conc = "";
+			if(!is_null($var) && is_string($var) && is_array($where) && !is_null($where))
+			{
+				$size = count($where);
+				foreach ($where as $key => $value) 
+				{
+					$conc .= "{$key} = '{$value}'"; 
+					if($size > 1)
+					{
+						$conc .= " {$var} ";		
+					}
+					$size--;
+				}	
+			}
+			elseif (is_null($var) && is_array($where) && !is_null($where)) 
+			{
+				$conc = "";
+				$size = count($where);
+				if($size == 1)
+				{
+					foreach ($where as $key => $value) 
+					{
+					 	$conc .= "{$key} = '{$value}'";
+					} 
+				}
+			}
+			$query = "select * from seguros where ".$conc;
+			$result = mysql_query($query);
+			return mysql_fetch_array($result);
+		}
 		
 		public function delete($id = null)
 		{
@@ -72,7 +116,17 @@
 			mysql_query($query);
 		}
 
-		public 
+		public function hospitals(Hospital $hospital = null)
+		{
+			if(!is_null($hospital))
+			{
+				$query = "insert into hospital_seguro(id_hospital, id_seguro) values ($hospital->id(), $this->_id)";	
+			}
+			else
+			{
+				return $this->_hospitals;
+			}
+		}
 
 	}
 ?>
