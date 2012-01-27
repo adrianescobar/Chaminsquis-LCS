@@ -144,15 +144,21 @@
 				</span>
 			</div>
 			<span id = "spBottonCenter">
-				<table id = "tabSearch">
+				<table id = "tabSearch2">
 					<tr>
-						<td><input id = "inpNo" type = "text"/></td>
+						<th>No. :</th>
+						<td><input id = "inpNo" type = "text"/>
+						<th>Calle:</th>
 						<td><input id = "inpSt" type = "text"/></td>
 					</tr>
 					<tr>
+						<th>Sector:</th>
 						<td><input id = "inpSec" type = "text"/></td>
+						<th>Ciudad:</th>
 						<td><input id = "inpCit" type = "text"/></td>
 					</tr>
+				</table>
+				<table id = "tabSearch">
 					<tr>
 						<td>
 							<select>
