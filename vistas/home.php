@@ -21,7 +21,7 @@
 						action: 'init',
 						options:{
 							center:[data.latitude,data.longitude],
-							zoom:8,
+							zoom:14,
 							mapTypeId: google.maps.MapTypeId.ROADMAP,
 							mapTypeControl: true,
 							mapTypeControlOptions: {
