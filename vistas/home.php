@@ -14,7 +14,6 @@
 		<script type = "text/javascript" src = "../js/jquery-gmap3-4.1/gmap3.min.js"></script>
 		<script type = "text/javascript">
 			$(function(){
-			
 				data = geolocalizacion();
 				$("#map_div").gmap3(
 					{
@@ -39,20 +38,20 @@
 					action: 'addMarker',
 					address: ""+data.latitude+","+data.longitude,
 					map:{
-					center: true,
-					zoom: 14
+						center: true,
+						zoom: 14
 					},
 					marker:{
-					options:{
-					draggable: false
-					}
+						options:{
+							draggable: false
+						}
 					},
 					infowindow:{
-					options:{
-					content: 'Posicion actual'
-					},
-					events:{}
-				}
+						options:{
+						content: 'Posicion actual'
+						},
+						events:{}
+					}
 				});
 				
 
