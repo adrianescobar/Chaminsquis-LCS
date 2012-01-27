@@ -13,8 +13,9 @@ body {
 #middle {
 	padding-top: 15px;
 	width: 80%;
-	height: 570px;
+	min-height: 300px;
 	margin: 0 auto;
+	padding:20px;
 	background-color: white;
 }
 #bottom {

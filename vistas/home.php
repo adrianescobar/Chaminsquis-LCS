@@ -54,48 +54,50 @@
 					events:{}
 				}
 				});
-
-				var geocoder = null;
 				
-				function initialize() {
+				$("button").button();
+				$(".headerATag").button();
+			});
+			
+			var geocoder = null;
+			
+			function initialize() {
+				geocoder = new google.maps.Geocoder();
+				
+			}
+			
+			function codeAddress(direccion) {
 
-					geocoder = new google.maps.Geocoder();
-					
+				if (geocoder) {
+					geocoder.geocode( 
+						{'address': data.latitude+','+data.longitude}, 
+						function(results, status) {
+							console.log(results);
+						}
+					);				
 				}
-				
-				function codeAddress() {
-					var address = document.getElementById("address").value;
-					var strlat;
-					var strlng;
-					if (geocoder) {
-						geocoder.geocode( 
-							{'address': address}, 
-							function(results, status) {
-								
-								if (status == google.maps.GeocoderStatus.OK) {
-									strlat = "" + results[0].geometry.location.lat();
-									strlng = "" + results[0].geometry.location.lng();
-									
-								} else {
-									alert("Geocode was not successful for the following reason: " + status);
-								}
+			}
+
+			function codeAddress2() {
+
+				if (geocoder) {
+					geocoder.geocode( 
+						{'address': data.latitude+','+data.longitude}, 
+						function(results, status) {
+							console.log(results);
+							for(item in results)
+							{
+								console.log(item);
 							}
-						);
-							console.log(result);
-						
-						};
-
-						results = [strlat,strlng];					
-						return results;
-					}
-
-					$("button").button();
-					$(".headerATag").button();
+							//localStorage.setItem("actual",results.formatted_address);
+						}
+					);				
 				}
-			}	
+			}
+			
 		</script>
 	</head>
-	<body onload="initialize()">
+	<body onload="initialize();codeAddress2()">
 		<div id = "header">
 			<?php include "header.php";?>
 		</div>
@@ -106,9 +108,7 @@
 
 			</div>
 						
-			<div id = "spBottonCenter">
-			</div>
-
+			
 		</div>
 		<div id = "bottom">
 			<?php include "footer.php";?>
