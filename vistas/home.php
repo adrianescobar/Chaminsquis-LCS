@@ -21,18 +21,41 @@
 						action: 'init',
 						options:{
 							center:[data.latitude,data.longitude],
-							zoom:8,
+							zoom:14,
 							mapTypeId: google.maps.MapTypeId.ROADMAP,
 							mapTypeControl: true,
 							mapTypeControlOptions: {
 								style: google.maps.MapTypeControlStyle.DROPDOWN_MENU
 							},
+							
 							navigationControl: true,
 							scrollwheel: true,
 							streetViewControl: true
 						}						
 					}
 				);
+
+				$('#map_div').gmap3({
+					action: 'addMarker',
+					address: ""+data.latitude+","+data.longitude,
+					map:{
+					center: true,
+					zoom: 14
+					},
+					marker:{
+					options:{
+					draggable: false
+					}
+					},
+					infowindow:{
+					options:{
+					content: 'Posicion actual'
+					},
+					events:{}
+				}
+				});
+				
+
 				$("button").button();
 				$(".headerATag").button();
 			});
@@ -132,15 +155,7 @@
 			<?php include "header.php";?>
 		</div>
 		<div id = "middle">
-			<!--
-			<form action="#">
-				<fieldset id = "fss">
-					<input type="text" size="60" name="address"  id = "address" value=""/>
-					<button type="button" onclick="codeAddress()">GO!</button>
-				</fieldset>
-				
-			</form>
-			-->
+
 			<div id = "spTopLeft">
 				<fieldset id = "fsTabSearch">
 					<table id = "tabSearch2">
@@ -180,11 +195,16 @@
 					</table>
 				</fieldset>
 			</div>
+			
 			<div id = "spTopRight">
+
 				<div class = "gmap3" id = "map_div" name = "map_div"></div>
-			</div>			
+
+			</div>
+						
 			<div id = "spBottonCenter">
 			</div>
+
 		</div>
 		<div id = "bottom">
 			<?php include "footer.php";?>
