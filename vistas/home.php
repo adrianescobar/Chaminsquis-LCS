@@ -6,6 +6,9 @@
 		<style media = "all" type = "text/css">@import url('../css/styles.css');</style>
 		<script type = "text/javascript" src = "http://maps.google.com/maps/api/js?sensor=false"></script>
 		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+		<script type = "text/javascript" src = "../js/jquery-ui-1.8.17.custom.min.js"></script>
+		<link type = "text/css" href = "../css/custom-theme/jquery-ui-1.8.17.custom.css" rel = "stylesheet"/>
+		<script type="text/javascript" src="../js/geolocalizacion.js"></script>
 		<script type = "text/javascript" src = "../js/jquery-gmap3-4.1/gmap3.min.js"></script>
 		<script type = "text/javascript">
 			$(function(){
@@ -26,6 +29,8 @@
 						}						
 					}
 				);
+				$("button").button();
+				$(".headerATag").button();
 			});
 			
 			var geocoder = null;
@@ -139,7 +144,15 @@
 				</span>
 			</div>
 			<span id = "spBottonCenter">
-				<table id = "tabSearch"	>
+				<table id = "tabSearch">
+					<tr>
+						<td><input id = "inpNo" type = "text"/></td>
+						<td><input id = "inpSt" type = "text"/></td>
+					</tr>
+					<tr>
+						<td><input id = "inpSec" type = "text"/></td>
+						<td><input id = "inpCit" type = "text"/></td>
+					</tr>
 					<tr>
 						<td>
 							<select>
