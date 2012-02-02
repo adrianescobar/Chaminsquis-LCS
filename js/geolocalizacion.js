@@ -21,12 +21,11 @@ function geolocalizacion()
 			if (geocoder) {
 					
 					data = eval(" ( " + data + " ) ");
-
+					//prompt("",data.longitude + "," + data.latitude);
 					geocoder.geocode( 
-
-						{'address': data.longitude + "," + data.latitude }, 
+						{'address': data.latitude + "," + data.longitude}, 
 						function(results, status) {
-							console.log(results);
+							//console.log(results);
 							if (status == google.maps.GeocoderStatus.OK) {
 								strlat = "" + results[0].geometry.location.lat();
 								strlng = "" + results[0].geometry.location.lng();

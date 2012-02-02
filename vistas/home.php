@@ -14,6 +14,7 @@
 		<script type = "text/javascript" src = "../js/jquery-gmap3-4.1/gmap3.min.js"></script>
 		<script type = "text/javascript">
 			$(function(){
+			
 				data = geolocalizacion();
 				$("#map_div").gmap3(
 					{
@@ -38,23 +39,22 @@
 					action: 'addMarker',
 					address: ""+data.latitude+","+data.longitude,
 					map:{
-						center: true,
-						zoom: 14
+					center: true,
+					zoom: 14
 					},
 					marker:{
-						options:{
-							draggable: false
-						}
+					options:{
+					draggable: false
+					}
 					},
 					infowindow:{
-						options:{
-						content: 'Posicion actual'
-						},
-						events:{}
-					}
+					options:{
+					content: 'Posicion actual'
+					},
+					events:{}
+				}
 				});
 				
-
 				$("button").button();
 				$(".headerATag").button();
 			});
@@ -66,144 +66,49 @@
 				
 			}
 			
-			function codeAddress() {
-				var address = document.getElementById("address").value;
-				var strlat;
-				var strlng;
+			function codeAddress(direccion) {
+
 				if (geocoder) {
 					geocoder.geocode( 
-						{'address': address}, 
+						{'address': data.latitude+','+data.longitude}, 
 						function(results, status) {
-							
-							if (status == google.maps.GeocoderStatus.OK) {
-								strlat = "" + results[0].geometry.location.lat();
-								strlng = "" + results[0].geometry.location.lng();
-								/*
-								$("#map_div").gmap3({action: 'setCenter', args:[results[0].geometry.location]});
-								$("#map_div").gmap3({action: 'setZoom', args:[14]});
-								*/
-							} else {
-								alert("Geocode was not successful for the following reason: " + status);
-							}
+							console.log(results);
 						}
-					);
-					results = [strlat,strlng];					
-					return results;
+					);				
+				}
+			}
+
+			function codeAddress2() {
+
+				if (geocoder) {
+					geocoder.geocode( 
+						{'address': data.latitude+','+data.longitude}, 
+						function(results, status) {
+							console.log(results);
+							for(item in results)
+							{
+								console.log(item);
+							}
+							//localStorage.setItem("actual",results.formatted_address);
+						}
+					);				
 				}
 			}
 			
-			/*
-			function codeLatLng() {
-				var input = document.getElementById("latlng").value;
-				var latlngStr = input.split(",",2);
-				var lat = parseFloat(latlngStr[0]);
-				var lng = parseFloat(latlngStr[1]);
-				var latlng = new google.maps.LatLng(lat, lng);
-				if (geocoder) {
-					geocoder.geocode(
-						{
-							'latLng': latlng
-						}, 
-						function(results, status) {
-							if (status == google.maps.GeocoderStatus.OK) {
-								if (results[1]) {
-									$("#map_div").gmap3({action: 'setZoom', args:[14]});
-									$("#map_div").gmap3({
-										action: 'addMarkers',
-										markers:[
-											{lat:48.8620722, lng:2.352047, data:'Paris !'},
-											{lat:46.59433,lng:0.342236, data:'Poitiers : great city !'},
-											{lat:42.704931, lng:2.894697, data:'Perpignan ! <br> GO USAP !'}
-										],
-										marker:{
-											options:{
-												draggable: false
-											},
-											events:{
-												mouseover: function(marker, event, data){
-													var map = $(this).gmap3('get'),
-														infowindow = $(this).gmap3({action:'get', name:'infowindow'});
-													if (infowindow){
-														infowindow.open(map, marker);
-														infowindow.setContent(data);
-													} else {
-														$(this).gmap3({action:'addinfowindow', anchor:marker, options:{content: data}});
-													}
-												},
-												mouseout: function(){
-													var infowindow = $(this).gmap3({action:'get', name:'infowindow'});
-													if (infowindow){
-														infowindow.close();
-													}
-												}
-											}
-										}
-									});
-								}
-							} else {
-								alert("Geocoder failed due to: " + status);
-							}
-						}
-					);
-				}
-			}*/
 		</script>
 	</head>
-	<body onload="initialize()">
+	<body onload="initialize();codeAddress2()">
 		<div id = "header">
 			<?php include "header.php";?>
 		</div>
 		<div id = "middle">
-
-			<div id = "spTopLeft">
-				<fieldset id = "fsTabSearch">
-					<table id = "tabSearch2">
-						<tr>
-							<th>No. :</th>
-							<td><input id = "inpNo" type = "text"/>
-							<th>Calle:</th>
-							<td><input id = "inpSt" type = "text"/></td>
-						</tr>
-						<tr>
-							<th>Sector:</th>
-							<td><input id = "inpSec" type = "text"/></td>
-							<th>Ciudad:</th>
-							<td><input id = "inpCit" type = "text"/></td>
-						</tr>
-					</table>
-					<table id = "tabSearch">
-						<tr>
-							<td>
-								<select>
-									<?php
-										//mysql_query();
-									?>
-								</select>
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<select>
-									<option>ARS Ejemplo</option>
-								</select>
-							</td>
-						</tr>
-						<tr>
-							<td colspan = "2"><button type = "submit">Buscar</button></td>
-						</tr>
-					</table>
-				</fieldset>
-			</div>
-			
 			<div id = "spTopRight">
 
 				<div class = "gmap3" id = "map_div" name = "map_div"></div>
 
 			</div>
 						
-			<div id = "spBottonCenter">
-			</div>
-
+			
 		</div>
 		<div id = "bottom">
 			<?php include "footer.php";?>
