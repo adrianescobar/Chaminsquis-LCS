@@ -1,117 +1,35 @@
-<?php
-	include "../modelo/Conection.php";
-	$con = Conection::connect();
-?>
-<html>
+<!Doctype html>
+<html lang="es">
 	<head>
-		<title>LCS Home</title>
-		<style media = "all" type = "text/css">@import url('../css/styles.css');</style>
-		<script type = "text/javascript" src = "http://maps.google.com/maps/api/js?sensor=false"></script>
-		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-		<script type = "text/javascript" src = "../js/jquery-ui-1.8.17.custom.min.js"></script>
-		<link type = "text/css" href = "../css/custom-theme/jquery-ui-1.8.17.custom.css" rel = "stylesheet"/>
-		<script type="text/javascript" src="../js/geolocalizacion.js"></script>
-		<script type = "text/javascript" src = "../js/jquery-gmap3-4.1/gmap3.min.js"></script>
-		<script type = "text/javascript">
-			$(function(){
-			
-				data = geolocalizacion();
-				$("#map_div").gmap3(
-					{
-						action: 'init',
-						options:{
-							center:[data.latitude,data.longitude],
-							zoom:14,
-							mapTypeId: google.maps.MapTypeId.ROADMAP,
-							mapTypeControl: true,
-							mapTypeControlOptions: {
-								style: google.maps.MapTypeControlStyle.DROPDOWN_MENU
-							},
-							
-							navigationControl: true,
-							scrollwheel: true,
-							streetViewControl: true
-						}						
-					}
-				);
+		<title></title>
+		<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCLB5MsqeEErVnp1pHoJyxbzVhl_ZYOB5U&sensor=false">
+    	</script>
+    	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    	<script type="text/javascript" src="../js/mapaGeo.js"></script>
 
-				$('#map_div').gmap3({
-					action: 'addMarker',
-					address: ""+data.latitude+","+data.longitude,
-					map:{
-					center: true,
-					zoom: 14
-					},
-					marker:{
-					options:{
-					draggable: false
-					}
-					},
-					infowindow:{
-					options:{
-					content: 'Posicion actual'
-					},
-					events:{}
-				}
-				});
-				
-				$("button").button();
-				$(".headerATag").button();
-			});
-			
-			var geocoder = null;
-			
-			function initialize() {
-				geocoder = new google.maps.Geocoder();
-				
-			}
-			
-			function codeAddress(direccion) {
-
-				if (geocoder) {
-					geocoder.geocode( 
-						{'address': data.latitude+','+data.longitude}, 
-						function(results, status) {
-							console.log(results);
-						}
-					);				
-				}
-			}
-
-			function codeAddress2() {
-
-				if (geocoder) {
-					geocoder.geocode( 
-						{'address': data.latitude+','+data.longitude}, 
-						function(results, status) {
-							console.log(results);
-							for(item in results)
-							{
-								console.log(item);
-							}
-							//localStorage.setItem("actual",results.formatted_address);
-						}
-					);				
-				}
-			}
-			
-		</script>
+    <link rel="stylesheet" href="style.css">
 	</head>
-	<body onload="initialize();codeAddress2()">
-		<div id = "header">
-			<?php include "header.php";?>
+<body onload="geolocalizacion()">
+	<div>
+		
+		<div id="header">
 		</div>
-		<div id = "middle">
-			<div id = "spTopRight">
 
-				<div class = "gmap3" id = "map_div" name = "map_div"></div>
-
+		<div id="body">
+			<div id="map">
+				
 			</div>
-						
-			
+
+			<div>
+				<div id="rutas"></div>
+				<button id="cargar">Cargar</button>
+			</div>
+
 		</div>
-		<div id = "bottom">
-			<?php include "footer.php";?>
+
+		<div id="footer">
 		</div>
-	</body>
+
+	</div>
+</body>
 </html>

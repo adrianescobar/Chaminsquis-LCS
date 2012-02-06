@@ -159,15 +159,13 @@
 
 			$numeroFila = 0;
 			
-			echo "[";
+			echo "{ \"hospitales\" : [ ";
 
 			while($re = mysql_fetch_array($result))
 			{
-				echo "{
-						'nombre':'{$re['nombre']}',
-						'direccion':'{$re['direccion']}',
-						'telefono':'{$re['telefono']}'
-					   }";
+				echo "{\"nombre\":\"{$re['nombre']}\",\"direccion\":\"{$re['direccion']}\"}";
+				// echo "{\"nombre\":\"{$re['nombre']}\",\"direccion\":\"{$re['direccion']}\",\"telefono\":\"{$re['telefono']}\"}";
+
 				$numeroFila++;
 				if($numeroFila!=mysql_num_rows($result))
 				{
@@ -176,7 +174,9 @@
 				
 			}
 
-			echo "]";
+			echo "]}";
+
+			// echo "{ \"hospitales\":[{\"nombre\":\"luis\"},{\"nombre\":\"luis\"}] }";
 
 			
 		}

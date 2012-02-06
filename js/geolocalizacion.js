@@ -1,53 +1,14 @@
 //Libreria Funciones Mapa y geolocalizacion
+
+//Obtener la Psicion Actual
 function geolocalizacion()
 {
-	var data;
-	if(navigator.geolocation)
+	if(navigator.geolocalizacion)
 	{
-		
-		navigator.geolocation.getCurrentPosition(function(position){
-			
-			var geocoder = new google.maps.Geocoder();
-
-			var lat = position.coords.latitude;
-
-			var lng = position.coords.longitude;
-			
-			data = "{'latitude':" + lat + ",'longitude':" + lng + "}";
-			
-			localStorage.setItem("data",data);
-
-			/*****************************************************************/
-			if (geocoder) {
-					
-					data = eval(" ( " + data + " ) ");
-					//prompt("",data.longitude + "," + data.latitude);
-					geocoder.geocode( 
-						{'address': data.latitude + "," + data.longitude}, 
-						function(results, status) {
-							//console.log(results);
-							if (status == google.maps.GeocoderStatus.OK) {
-								strlat = "" + results[0].geometry.location.lat();
-								strlng = "" + results[0].geometry.location.lng();
-								/*
-								$("#map_div").gmap3({action: 'setCenter', args:[results[0].geometry.location]});
-								$("#map_div").gmap3({action: 'setZoom', args:[14]});
-								*/
-							} else {
-								alert("Geocode was not successful for the following reason: " + status);
-							}
-						}
-					)};
-/*************************************************************/
-
-		});
-		
-		return eval("("+ localStorage.getItem("data") +")");;
-			
-	}else{
-		
-		alert("Geolocalizacion No Soportada");
-
+		alert("Puede meter mano");
+	}else
+	{
+		alert("Error de Localizacion");
 	}
 }
 
