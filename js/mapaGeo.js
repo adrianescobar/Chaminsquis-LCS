@@ -168,7 +168,7 @@ function init(lat,lng) {
 		// });
     alert("Esto es direccion" + destino);
     if(destino!=0){
-
+      
   	  //Pinta una sola ruta en el mapa
       pintarRuta2(map,new google.maps.LatLng(lat,lng),{direccion:destino});
 
@@ -176,7 +176,8 @@ function init(lat,lng) {
     {
       
       crearMarcador(map,new google.maps.LatLng(lat,lng));
-
+      
+      alert("Entro alk");
     }
 }
 
