@@ -23,8 +23,10 @@ function geolocalizacion()
 function cargarHospitales()
 {
 	
+	//Evento click para el boton cargar
 	$("#cargar").click(function(){
 		
+		//metodo ajax para la carga de datos
 		$.ajax({
 			url:"../controladores/hControlller.php",
 			success:function(data){
@@ -44,32 +46,57 @@ function cargarHospitales()
 	});
 
 }
-
+//santiago #705
 function pintarRuta2(map,origen,destino){
 
    var directionsService = new google.maps.DirectionsService();
    var directionsDisplay = new google.maps.DirectionsRenderer();
 
+   //pongo donde sera msotrado la ruta
    directionsDisplay.setMap(map);
+   		
+   		info = new google.maps.InfoWindow({content: 'Wohoooo, salió el InfoWindow cuando pulsé el marcador, pero ¿hay más?'});
+   		
+     //  market = new google.maps.Marker({
+	    //     position: origen
+	    //     , map: map
+	    //     , title: 'Pulsa aquí'
+	    //     , icon: 'http://gmaps-samples.googlecode.com/svn/trunk/markers/pink/blank.png'
+	    // });
 
+   directionsDisplay.setOptions({
+   		draggable:true,
+   		suppressInfoWindows:true,
+		  infoWindow: info
+   });
+
+   info.open(map);
+
+   console.log(directionsDisplay);
+   //consulta para la ruta el origen es pasado con cordenadas el destino con una direccion
    var request = {
        origin: origen, 
-       destination: destino +" santo domingo",
+       destination: destino.direccion +" santo domingo",
        travelMode: google.maps.DirectionsTravelMode.DRIVING
    };
 
-   directionsService.route(request, function(response, status) {
+
+   directionsService.route(request, function(response, status) {	
       if (status == google.maps.DirectionsStatus.OK) {
 
          // Display the distance:
-         //document.getElementById('distance').innerHTML += 
-           // response.routes[0].legs[0].distance.value + " meters";
+         //document.getElementById('distance').innerHTML += response.routes[0].legs[0].distance.value + " Metros";
+          div = $("<div>");
+          $("<span>").text(response.routes[0].legs[0].distance.value + " Metros").appendTo(div);
+          //$("<span>").text(destino.nombre).appendTo(div);
+          div.appendTo("#rutas");
 
          // Display the duration:
          //document.getElementById('duration').innerHTML += 
            // response.routes[0].legs[0].duration.value + " seconds";
 
          directionsDisplay.setDirections(response);
+
          //Este atributo tiene la posicion actual y la calle osea 2 formas de llegar via direcion y geo
          console.log(response);
       }
@@ -109,42 +136,47 @@ function pintarRuta(mapa,origen,destino)
 
 function init(lat,lng) {
 
+
     var myOptions = {
       center: new google.maps.LatLng(lat,lng),
       zoom: 14,
       mapTypeId: google.maps.MapTypeId.ROADMAP
     };
         
-    var map = new google.maps.Map(document.getElementById("map"),
-        myOptions);
+    //crear la instancia del mapa
+    var map = new google.maps.Map(document.getElementById("map"),myOptions);
 
+    //Crea el marcador de posicion actual
     crearMarcador(map,new google.maps.LatLng(lat,lng));
 
     detino = null;
 
     direccion = document.location.href.split("?")[1];
 
+    //si no hay parametros en la ruta no indicara a nada
     if(direccion!=null)
     {
     	destino = direccion.split("=")[1];
     	destino = destino.replace(/%20/gi," ");
     }else
     {
+
     	destino = 0;
+
     }
 
     //mostrara la direccion del destino
-    // alert(destino);
+    alert(destino);
 
 
-
+    //pitara todas las rutas en el mapa
   //   $.ajax({
 		// 	url:"../controladores/hControlller.php",
 		// 	success:function(data){
 
 		// 		for(i=0;i<data.hospitales.length;i++)
 		// 		{
-		// 			pintarRuta2(map,new google.maps.LatLng(lat,lng),data.hospitales[i].direccion);
+		// 			pintarRuta2(map,new google.maps.LatLng(lat,lng),data.hospitales[i]);
 					
 		// 		}
 
@@ -153,8 +185,10 @@ function init(lat,lng) {
 		// 	dataType:'json'
 		// });
 
+	//Pinta una sola ruta en el mapa
     pintarRuta2(map,new google.maps.LatLng(lat,lng),destino);
 
+    //Activa el boton de cargar la lista de hospitales
     cargarHospitales();
 }
 
