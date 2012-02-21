@@ -1,0 +1,21 @@
+/* Style */
+body
+{
+	margin:2% 2%;
+	border:2px solid blue;
+	width:96%;
+
+}
+
+#map
+{
+	width:90%;
+	height:400px;
+	margin:20px auto;
+}
+
+
+.rutas
+{
+	display: block;
+}

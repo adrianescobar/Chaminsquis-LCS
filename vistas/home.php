@@ -1,28 +1,60 @@
 <!Doctype html>
 <html lang="es">
 	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 		<title></title>
 		<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCLB5MsqeEErVnp1pHoJyxbzVhl_ZYOB5U&sensor=false">
     	</script>
     	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
     	<script type="text/javascript" src="../js/mapaGeo.js"></script>
+    	<script>
+    		
+    		$(document).ready(function(){
+    			
+    			//Evento click para el boton cargar
+				$("#cargar").click(function(){
+					
+					//metodo ajax para la carga de datos
+					$.ajax({
+						url:"../controladores/hControlller.php",
+						success:function(data){
 
-    <link rel="stylesheet" href="style.css">
+							for(i=0;i<data.hospitales.length;i++)
+							{
+								$("<a>").attr("href","home.php?direccion="+data.hospitales[i].direccion).text(data.hospitales[i].nombre).addClass("rutas").appendTo("#rutas");
+								
+							}
+
+						},
+						type:'get',
+						dataType:'json'
+					});
+
+					
+				});
+
+    		});
+
+    	</script>
+
+    <link rel="stylesheet" href="../css/style.css">
 	</head>
 <body onload="geolocalizacion()">
 	<div>
 		
 		<div id="header">
+			<h1>Header</h1>
 		</div>
 
 		<div id="body">
-			<div id="map">
-				
-			</div>
+
+			<div id="map"></div>
 
 			<div>
+				
+				<button id="cargar">Cargar2</button>
 				<div id="rutas"></div>
-				<button id="cargar">Cargar</button>
+
 			</div>
 
 		</div>

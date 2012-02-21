@@ -1,5 +1,7 @@
 //Libreria Funciones Mapa y geolocalizacion
 
+rutas = [];
+
 //Obtener la Psicion Actual
 function geolocalizacion()
 {
@@ -20,39 +22,14 @@ function geolocalizacion()
 	}
 }
 
-function cargarHospitales()
-{
-	
-	//Evento click para el boton cargar
-	$("#cargar").click(function(){
-		
-		//metodo ajax para la carga de datos
-		$.ajax({
-			url:"../controladores/hControlller.php",
-			success:function(data){
 
-				for(i=0;i<data.hospitales.length;i++)
-				{
-					$("<a>").attr("href","home.php?direccion="+data.hospitales[i].direccion).text(data.hospitales[i].nombre).addClass("rutas").appendTo("#rutas");
-					
-				}
-
-			},
-			type:'get',
-			dataType:'json'
-		});
-
-		
-	});
-
-}
-//santiago #705
+//Pinta LAs Rutas
 function pintarRuta2(map,origen,destino){
 
    var directionsService = new google.maps.DirectionsService();
    var directionsDisplay = new google.maps.DirectionsRenderer();
 
-   //pongo donde sera msotrado la ruta
+   //pongo donde sera msotrado la ruta osea el mapa
    directionsDisplay.setMap(map);
    		
    		info = new google.maps.InfoWindow({content: 'Wohoooo, salió el InfoWindow cuando pulsé el marcador, pero ¿hay más?'});
@@ -64,6 +41,7 @@ function pintarRuta2(map,origen,destino){
 	    //     , icon: 'http://gmaps-samples.googlecode.com/svn/trunk/markers/pink/blank.png'
 	    // });
 
+
    directionsDisplay.setOptions({
    		draggable:true,
    		suppressInfoWindows:true,
@@ -72,8 +50,9 @@ function pintarRuta2(map,origen,destino){
 
    info.open(map);
 
-   console.log(directionsDisplay);
    //consulta para la ruta el origen es pasado con cordenadas el destino con una direccion
+   prompt("",destino.direccion +  " santo domingo");
+   
    var request = {
        origin: origen, 
        destination: destino.direccion +" santo domingo",
@@ -87,7 +66,11 @@ function pintarRuta2(map,origen,destino){
          // Display the distance:
          //document.getElementById('distance').innerHTML += response.routes[0].legs[0].distance.value + " Metros";
           div = $("<div>");
-          $("<span>").text(response.routes[0].legs[0].distance.value + " Metros").appendTo(div);
+          $("<span>").text(conver(response.routes[0].legs[0].distance.value)).appendTo(div);
+            
+            //Agregar la distancia de cada uno a un array
+            rutas.push({distancia:conver(response.routes[0].legs[0].distance.value)});
+           
           //$("<span>").text(destino.nombre).appendTo(div);
           div.appendTo("#rutas");
 
@@ -97,10 +80,11 @@ function pintarRuta2(map,origen,destino){
 
          directionsDisplay.setDirections(response);
 
-         //Este atributo tiene la posicion actual y la calle osea 2 formas de llegar via direcion y geo
-         console.log(response);
       }
    });
+
+   console.log(rutas);
+   //rutas.sort(function(a,b){return parseInt(a.distancia) - parseInt(b.distancia)});
 
 }
 
@@ -136,7 +120,6 @@ function pintarRuta(mapa,origen,destino)
 
 function init(lat,lng) {
 
-
     var myOptions = {
       center: new google.maps.LatLng(lat,lng),
       zoom: 14,
@@ -147,7 +130,7 @@ function init(lat,lng) {
     var map = new google.maps.Map(document.getElementById("map"),myOptions);
 
     //Crea el marcador de posicion actual
-    crearMarcador(map,new google.maps.LatLng(lat,lng));
+    //crearMarcador(map,new google.maps.LatLng(lat,lng));
 
     detino = null;
 
@@ -166,10 +149,9 @@ function init(lat,lng) {
     }
 
     //mostrara la direccion del destino
-    alert(destino);
+    //alert(destino);
 
-
-    //pitara todas las rutas en el mapa
+    // pitara todas las rutas en el mapa
   //   $.ajax({
 		// 	url:"../controladores/hControlller.php",
 		// 	success:function(data){
@@ -184,27 +166,49 @@ function init(lat,lng) {
 		// 	type:'get',
 		// 	dataType:'json'
 		// });
+    alert("Esto es direccion" + destino);
+    if(destino!=0){
 
-	//Pinta una sola ruta en el mapa
-    pintarRuta2(map,new google.maps.LatLng(lat,lng),destino);
+  	  //Pinta una sola ruta en el mapa
+      pintarRuta2(map,new google.maps.LatLng(lat,lng),{direccion:destino});
 
-    //Activa el boton de cargar la lista de hospitales
-    cargarHospitales();
+    }else
+    {
+      
+      crearMarcador(map,new google.maps.LatLng(lat,lng));
+
+    }
+}
+
+
+//Me Retornada si puede ir en metros o en Km resivira un int en metros
+function conver(distancia)
+{
+    if(distancia<1000)
+    {
+
+      return distancia + "Metros";
+
+    }else
+    {
+      
+      return (distancia/1000).toFixed(2) + "Km";
+
+    }
 }
 
 function crearMarcador(map,pos)
 {
-	console.log(map.getCenter());
 	marcador = new google.maps.Marker({
         position: pos
         , map: map
-        , title: 'Estas Aqui'
+        , title: 'Usteb Esta Aqui'
         , icon: 'http://gmaps-samples.googlecode.com/svn/trunk/markers/green/blank.png'
         , cursor: 'default'
         , draggable: true
     });
 
-    crearInfo(map,pos,"Hola gente",marcador)
+    crearInfo(map,pos,"Usteb Esta Aqui",marcador)
 }
 
 function crearInfo(map,pos,info,marcador)
