@@ -56,3 +56,38 @@ body
 {
 	margin-top: 10px;
 }
+
+#rutas
+{
+	width:90%;
+	margin: 3% auto;
+	text-align:center;
+}
+
+.rutas
+{
+	display: block;
+}
+
+
+.link
+{
+	text-decoration:none;
+}
+
+.distancia
+{
+	color: white;
+}
+
+.contenedor
+{
+	border:2px solid blue;
+	display: inline-block;
+	width:25%;
+	margin:1%;
+	padding:1%;
+	height:35px;
+	border-radius:8px;
+	background-color:red;
+}

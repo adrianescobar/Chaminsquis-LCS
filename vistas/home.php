@@ -3,6 +3,7 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 		<title></title>
+		<script type="text/javascript" src="../js/linq.min.js"></script>
 		<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCLB5MsqeEErVnp1pHoJyxbzVhl_ZYOB5U&sensor=false">
     	</script>
     	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
@@ -22,7 +23,7 @@
 		<div class = 'all'>
 			<div class= "header" >
 				<div class = 'inicio'>
-					<a href="home1.php"><img src="../img/icon.png"></a>
+					<a href="home.php"><img src="../img/icon.png"></a>
 				</div>
 			</div>
 
