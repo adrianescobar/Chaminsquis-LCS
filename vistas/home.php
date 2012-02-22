@@ -11,9 +11,12 @@
     		
     		$(document).ready(function(){
     			
+
+
+
     			//Evento click para el boton cargar
 				$("#cargar").click(function(){
-					
+				
 					//metodo ajax para la carga de datos
 					$.ajax({
 						url:"../controladores/hControlller.php",
@@ -32,8 +35,9 @@
 
 					
 				});
-
-    		});
+				//
+			});
+    		
 
     	</script>
 
