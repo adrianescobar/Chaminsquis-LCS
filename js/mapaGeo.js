@@ -26,6 +26,7 @@ function geolocalizacion()
 //Pinta Las Rutas
 function pintarRuta2(map,origen,destino){
 
+   console.log(destino);
    var directionsService = new google.maps.DirectionsService();
    var directionsDisplay = new google.maps.DirectionsRenderer();
 
@@ -55,7 +56,7 @@ function pintarRuta2(map,origen,destino){
    
    var request = {
        origin: origen, 
-       destination: destino.direccion,
+       destination: destino.cordenadas,
        travelMode: google.maps.DirectionsTravelMode.DRIVING
    };
 
@@ -64,9 +65,10 @@ function pintarRuta2(map,origen,destino){
 
          // Display the distance:
          //document.getElementById('distance').innerHTML += response.routes[0].legs[0].distance.value + " Metros";
-         
-          div = $("<div>");
-          $("<a>").attr("href","home.php?direccion="+destino.direccion).text(destino.nombre || destino.direccion).addClass("rutas").appendTo(div);
+
+        div = $("<div>");
+        // $("<a>").attr("href","google.com").text(destino.nombre || destino.direccion).appendTo(div);
+          $("<a>").attr("href","home.php?direccion="+ destino.direccion + "&cordenadas="+destino.cordenadas + "&nombre=" + destino.nombre).text(destino.nombre || destino.direccion).addClass("rutas").appendTo(div);
           $("<span>").text(destino.nombre || destino.direccion).appendTo(div);
           $("<span>").text(conver(response.routes[0].legs[0].distance.value)).appendTo(div);
          
@@ -103,7 +105,7 @@ function capturarDistancias(map,origen,destino){
    
    var request = {
        origin: origen, 
-       destination: destino.direccion,
+       destination: destino.cordenadas,
        travelMode: google.maps.DirectionsTravelMode.DRIVING
    };
 
@@ -174,8 +176,9 @@ function init(lat,lng) {
     //si no hay parametros en la ruta no indicara a nada
     if(direccion!=null)
     {
-    	destino = direccion.split("=")[1];
-    	destino = destino.replace(/%20/gi," ");
+    	destino = {direcciom:direccion.split("=")[1].split("&")[0].replace(/%20/gi," "),cordenadas:direccion.split("=")[2].split("&")[0],nombre:direccion.split("=")[3].split("&")[0].replace(/%20/gi," ")};
+    	//destino = destino.replace(/%20/gi," ");
+      console.log(destino);
     }else
     {
 
@@ -185,7 +188,7 @@ function init(lat,lng) {
 
     if(destino!=0){
       
-      pintarRuta2(map,new google.maps.LatLng(lat,lng),{direccion:destino});
+      pintarRuta2(map,new google.maps.LatLng(lat,lng),destino);
 
     }else
     {
@@ -217,11 +220,11 @@ function init(lat,lng) {
 function pintarRutaTop(map,origen)
 {
   console.log(map);
-  select = document.getElementById("numOpciones");
+  // select = document.getElementById("numOpciones");
 
-  take = select.options[select.selectedIndex].value;
+  // take = select.options[select.selectedIndex].value;
 
-  resultado = Enumerable.From(window.rutas).OrderBy(function(x){return x[0];}).Take(take).ToArray();
+  resultado = Enumerable.From(window.rutas).OrderBy(function(x){return x[0];}).Take(10).ToArray();
   
   for(i =0;i<resultado.length;i++)
   {

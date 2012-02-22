@@ -156,17 +156,20 @@
 			// $query = "select h.nombre, h.direccion, h.provincia, h.telefono from hospitales h inner join hospital_seguro hs on h.id_hospital = hs.id_hospital inner join seguros s on hs.id_seguro = s.id_seguro ";
 
 			//Where Provincia
-			$query = "select h.nombre, h.direccion, h.provincia, h.telefono from hospitales h inner join hospital_seguro hs on h.id_hospital = hs.id_hospital inner join seguros s on hs.id_seguro = s.id_seguro where h.provincia = '{$namePro}' and s.nombre = '{$nameIns}'";
+			$query = "select h.nombre, h.direccion, h.provincia,h.coordenada, h.telefono from hospitales h inner join hospital_seguro hs on h.id_hospital = hs.id_hospital inner join seguros s on hs.id_seguro = s.id_seguro where h.provincia = '{$namePro}' and s.nombre = '{$nameIns}'";
 			
 			$result = mysql_query($query);
 
 			$numeroFila = 0;
-			
+
 			echo "{ \"hospitales\" : [ ";
 
 			while($re = mysql_fetch_array($result))
 			{
-				echo "{\"nombre\":\"{$re['nombre']}\",\"direccion\":\"{$re['direccion']} {$re['provincia']} \"}";
+
+				//echo $re["cordenadas"];
+
+				echo "{\"nombre\":\"{$re['nombre']}\",\"direccion\":\"{$re['direccion']} {$re['provincia']}\",\"cordenadas\":\"{$re['coordenada']}\"}";
 				// echo "{\"nombre\":\"{$re['nombre']}\",\"direccion\":\"{$re['direccion']}\",\"telefono\":\"{$re['telefono']}\"}";
 
 				$numeroFila++;

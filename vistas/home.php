@@ -54,7 +54,7 @@
 
 			<div>
 				
-				<button id="cargar" onclick="alert(rutas);">Cargar2</button>
+				<!-- <button id="cargar" onclick="alert(rutas);">Cargar2</button>
 				<select id="numOpciones">
 
 					<option value="5">Seleccione una Cantidad</option>
@@ -62,7 +62,7 @@
 					<option value="15">15</option>
 					<option value="20">20</option>
 
-				</select>
+				</select> -->
 				<div id="rutas"></div>
 
 			</div>
