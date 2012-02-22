@@ -5,6 +5,7 @@
 		<title></title>
 		<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCLB5MsqeEErVnp1pHoJyxbzVhl_ZYOB5U&sensor=false">
     	</script>
+    	<script type="text/javascript" src="../js/linq.min.js"></script>
     	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
     	<script type="text/javascript" src="../js/mapaGeo.js"></script>
     	<script>
@@ -33,6 +34,7 @@
 						dataType:'json'
 					});
 
+				$("<option>").attr("value","2").appendTo("#numOpciones");
 					
 				});
 				//
@@ -56,7 +58,15 @@
 
 			<div>
 				
-				<button id="cargar">Cargar2</button>
+				<button id="cargar" onclick="alert(rutas);">Cargar2</button>
+				<select id="numOpciones">
+
+					<option value="5">Seleccione una Cantidad</option>
+					<option value="10">10</option>
+					<option value="15">15</option>
+					<option value="20">20</option>
+
+				</select>
 				<div id="rutas"></div>
 
 			</div>
