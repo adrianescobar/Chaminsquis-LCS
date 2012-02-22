@@ -153,6 +153,9 @@
 		}*/
 		public function find($nameIns, $namePro)
 		{
+			// $query = "select h.nombre, h.direccion, h.provincia, h.telefono from hospitales h inner join hospital_seguro hs on h.id_hospital = hs.id_hospital inner join seguros s on hs.id_seguro = s.id_seguro ";
+
+			//Where Provincia
 			$query = "select h.nombre, h.direccion, h.provincia, h.telefono from hospitales h inner join hospital_seguro hs on h.id_hospital = hs.id_hospital inner join seguros s on hs.id_seguro = s.id_seguro where h.provincia = '{$namePro}' and s.nombre = '{$nameIns}'";
 			
 			$result = mysql_query($query);
@@ -163,7 +166,7 @@
 
 			while($re = mysql_fetch_array($result))
 			{
-				echo "{\"nombre\":\"{$re['nombre']}\",\"direccion\":\"{$re['direccion']}\"}";
+				echo "{\"nombre\":\"{$re['nombre']}\",\"direccion\":\"{$re['direccion']} {$re['provincia']} \"}";
 				// echo "{\"nombre\":\"{$re['nombre']}\",\"direccion\":\"{$re['direccion']}\",\"telefono\":\"{$re['telefono']}\"}";
 
 				$numeroFila++;

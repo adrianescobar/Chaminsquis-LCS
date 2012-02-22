@@ -23,7 +23,7 @@ function geolocalizacion()
 }
 
 
-//Pinta LAs Rutas
+//Pinta Las Rutas
 function pintarRuta2(map,origen,destino){
 
    var directionsService = new google.maps.DirectionsService();
@@ -42,11 +42,11 @@ function pintarRuta2(map,origen,destino){
 	    // });
 
 
-   directionsDisplay.setOptions({
-   		draggable:true,
-   		suppressInfoWindows:true,
-		  infoWindow: info
-   });
+   // directionsDisplay.setOptions({
+   // 		draggable:true,
+   // 		suppressInfoWindows:true,
+		 //  infoWindow: info
+   // });
 
    info.open(map);
 
@@ -55,10 +55,9 @@ function pintarRuta2(map,origen,destino){
    
    var request = {
        origin: origen, 
-       destination: destino.direccion +" santo domingo",
+       destination: destino.direccion,
        travelMode: google.maps.DirectionsTravelMode.DRIVING
    };
-
 
    directionsService.route(request, function(response, status) {	
       if (status == google.maps.DirectionsStatus.OK) {
@@ -66,10 +65,12 @@ function pintarRuta2(map,origen,destino){
          // Display the distance:
          //document.getElementById('distance').innerHTML += response.routes[0].legs[0].distance.value + " Metros";
           div = $("<div>");
+          $("<span>").text(destino.nombre || destino.direccion).appendTo(div);
           $("<span>").text(conver(response.routes[0].legs[0].distance.value)).appendTo(div);
+         
             
             //Agregar la distancia de cada uno a un array
-            rutas.push({distancia:conver(response.routes[0].legs[0].distance.value)});
+            rutas.push({"nombre":destino.nombre,"distancia":conver(response.routes[0].legs[0].distance.value)});
            
           //$("<span>").text(destino.nombre).appendTo(div);
           div.appendTo("#rutas");
@@ -79,12 +80,44 @@ function pintarRuta2(map,origen,destino){
            // response.routes[0].legs[0].duration.value + " seconds";
 
          directionsDisplay.setDirections(response);
+         //console.log(rutas.sort());
 
+      }else
+      {
+        alert("Error con la Direccion" + destino.direccion);
       }
    });
 
-   console.log(rutas);
-   //rutas.sort(function(a,b){return parseInt(a.distancia) - parseInt(b.distancia)});
+}
+
+
+function capturarDistancias(map,origen,destino){
+
+   var directionsService = new google.maps.DirectionsService();
+   var directionsDisplay = new google.maps.DirectionsRenderer();
+
+   //pongo donde sera msotrado la ruta osea el mapa
+   directionsDisplay.setMap(map);
+   
+   var request = {
+       origin: origen, 
+       destination: destino.direccion,
+       travelMode: google.maps.DirectionsTravelMode.DRIVING
+   };
+
+   directionsService.route(request, function(response, status) {  
+
+      if (status == google.maps.DirectionsStatus.OK) { 
+
+        //Agregar la distancia de cada uno a un array
+        rutas.push([response.routes[0].legs[0].distance.value,destino]);  
+        
+      }else
+      {
+        console.log("Error");
+      }
+
+   });
 
 }
 
@@ -148,39 +181,53 @@ function init(lat,lng) {
 
     }
 
-    //mostrara la direccion del destino
-    //alert(destino);
-
-    // pitara todas las rutas en el mapa
-  //   $.ajax({
-		// 	url:"../controladores/hControlller.php",
-		// 	success:function(data){
-
-		// 		for(i=0;i<data.hospitales.length;i++)
-		// 		{
-		// 			pintarRuta2(map,new google.maps.LatLng(lat,lng),data.hospitales[i]);
-					
-		// 		}
-
-		// 	},
-		// 	type:'get',
-		// 	dataType:'json'
-		// });
-    alert("Esto es direccion" + destino);
     if(destino!=0){
       
-  	  //Pinta una sola ruta en el mapa
       pintarRuta2(map,new google.maps.LatLng(lat,lng),{direccion:destino});
 
     }else
     {
-      
+      //prompt("",lat + " " + lng);
       crearMarcador(map,new google.maps.LatLng(lat,lng));
-      
-      alert("Entro alk");
+
+       // pitara todas las rutas en el mapa
+        $.ajax({
+         url:"../controladores/hControlller.php",
+         success:function(data){
+
+           for(i=0;i<data.hospitales.length;i++)
+           {
+            capturarDistancias(map,new google.maps.LatLng(lat,lng),data.hospitales[i]);
+           }
+          console.log(map);
+           setTimeout(function(){
+             pintarRutaTop(map,new google.maps.LatLng(lat,lng));
+           },4000);
+           //resultado = Enumerable.From(window.rutas).Select(function(a){return a[0]}).ToArray();
+           
+         },
+         type:'get',
+         dataType:'json'
+        });
     }
 }
 
+function pintarRutaTop(map,origen)
+{
+  console.log(map);
+  select = document.getElementById("numOpciones");
+
+  take = select.options[select.selectedIndex].value;
+
+  resultado = Enumerable.From(window.rutas).OrderBy(function(x){return x[0];}).Take(take).ToArray();
+  
+  for(i =0;i<resultado.length;i++)
+  {
+    console.log(resultado[i]);
+    pintarRuta2(map,origen,resultado[i][1]);
+  }
+  
+}
 
 //Me Retornada si puede ir en metros o en Km resivira un int en metros
 function conver(distancia)
