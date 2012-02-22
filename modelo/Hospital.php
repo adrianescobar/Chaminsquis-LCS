@@ -181,44 +181,9 @@
 			}
 
 			echo "]}";
-
-			// echo "{ \"hospitales\":[{\"nombre\":\"luis\"},{\"nombre\":\"luis\"}] }";
-
 			
 		}
-		/*public function find($select = array(), $where = array(), $andOr = "", $groupBy = "";
-		{
-			$query = "";
-
-			if(!is_null($select) && is_array($select))
-			{
-				$query = "select ";
-				foreach ($select as $key => $value) {
-					$query .= $value . ", ";
-				}	
-			}
-			if(!is_null($where) && is_array($where) && !is_null($andOr) && is_string($andOr))
-			{
-				$query .= "where "
-				$size = count($where);
-				foreach ($where as $key => $value) {
-					$query .= $key . " = " . $value;
-					if(size > 1)
-						$query .= " ".$andOr;
-				}
-			}
-			if(!is_null($groupBy) && !is_array($andOr))
-			{
-				$query .= "group by ".$groupBy;
-			}
-			$result = mysql_query($query);
-			while($re = mysql_fetch_array($result))
-			{
-				$ret[] = $re;
-			}		
-			return $ret;
-		}
-		*/
+		
 		public function delete($id = null)
 		{
 			if($id != null)
