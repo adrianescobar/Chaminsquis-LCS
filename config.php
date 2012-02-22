@@ -4,7 +4,7 @@
 	*/
 	define("SERVER", "localhost");
 	define("USER", "root");
-	define("PASSWORD", "");
+	define("PASSWORD", "102030");
 	define("DATABASE", "datos");
 
 

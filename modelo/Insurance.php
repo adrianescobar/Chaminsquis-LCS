@@ -1,5 +1,5 @@
 <?php 
-	require_once("Conection.php");
+	require_once("con/Conection.php");
 
 	class Insurance 
 	{

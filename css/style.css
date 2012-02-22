@@ -1,21 +1,58 @@
 /* Style */
 body
 {
-	margin:2% 2%;
-	border:2px solid blue;
-	width:96%;
-
+	margin: 0;
+	background-color: #afafaf;
 }
 
 #map
 {
-	width:90%;
-	height:400px;
-	margin:20px auto;
-}
+	width: 60%;
+	height: 400px;
+	margin: 20px auto;
 
+}
+.all
+{
+}
 
 .rutas
 {
 	display: block;
+}
+
+.header
+{
+	width: 100%;
+	height: 40px;
+	background-color: #459ff9;
+}
+
+.inicio
+{
+	width: 60px;
+	height: 40px;
+	margin-left: 20%;
+}
+
+.footer
+{
+	width: 60%;
+	height: 40px;
+	background-color: #459ff9;
+	margin-left: 20%;
+}
+
+.footer #title
+{
+	margin-left:10%;
+	border: #459ff9 solid 1px;
+	background-color: #459ff9;
+	height: 38px;
+	width: 200px;
+}
+
+.footer #title h4
+{
+	margin-top: 10px;
 }
