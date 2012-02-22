@@ -64,7 +64,9 @@ function pintarRuta2(map,origen,destino){
 
          // Display the distance:
          //document.getElementById('distance').innerHTML += response.routes[0].legs[0].distance.value + " Metros";
+         
           div = $("<div>");
+          $("<a>").attr("href","home.php?direccion="+destino.direccion).text(destino.nombre || destino.direccion).addClass("rutas").appendTo(div);
           $("<span>").text(destino.nombre || destino.direccion).appendTo(div);
           $("<span>").text(conver(response.routes[0].legs[0].distance.value)).appendTo(div);
          
